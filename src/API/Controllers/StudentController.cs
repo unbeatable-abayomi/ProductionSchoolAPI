@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
-{   [ApiVersion( "1.0" )]
-    [ApiController]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    public class DepartmentController : ControllerBase
+{
+    public class StudentController : Controller
     {
+        // GET
         // GET
         [HttpGet]
         public IActionResult GetAll()
@@ -45,11 +43,11 @@ namespace API.Controllers
         }
     }
     
-    public  static class  DepartmentStatic
+    public  static class  StudentStatic
     {
-        private static List<Department> AllDepartments { get; set; } = new List<Department>();
+        private static List<Student> AllDepartments { get; set; } = new List<Student>();
 
-        public static Department InsertDepartment(Department department)
+        public static Student InsertDepartment(Student department)
         {
             AllDepartments.Add(department);
             return department;
