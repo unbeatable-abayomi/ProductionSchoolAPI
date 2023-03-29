@@ -1,94 +1,97 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [ApiVersion( "1.0" )]
+    [ApiController]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class StudentController : Controller
     {
-        // GET
         // GET
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(DepartmentStatic.GetAllDepartments());
+            return Ok(StudentStatic.GetAllStudents());
         }
 
 
-        [HttpGet("{code}")]
-        public IActionResult GetA(string code)
+        [HttpGet("{email}")]
+        public IActionResult GetA(string email)
         {
-            return Ok(DepartmentStatic.GetADepartment(code));
+            return Ok(StudentStatic.GetAStudent(email));
         }
         
         
         [HttpPost]
-        public IActionResult Insert(Department department)
+        public IActionResult Insert(Student student)
         {
-            return Ok(DepartmentStatic.InsertDepartment(department));
+            return Ok(StudentStatic.InsertStudent(student));
         }
         
-        [HttpPut("{code}")]
-        public IActionResult Update(string code,Department department)
+        [HttpPut("{email}")]
+        public IActionResult Update(string email,Student student)
         {
-            return Ok(DepartmentStatic.UpdateDepartment(code,department));
+            return Ok(StudentStatic.UpdateStudent(email,student));
         }
         
          
         
-        [HttpDelete("{code}")]
-        public IActionResult Delete(string code)
+        [HttpDelete("{email}")]
+        public IActionResult Delete(string email)
         {
-            return Ok(DepartmentStatic.DeleteDepartment(code));
+            return Ok(StudentStatic.DeleteStudent(email));
         }
     }
     
     public  static class  StudentStatic
     {
-        private static List<Student> AllDepartments { get; set; } = new List<Student>();
+        private static List<Student> AllStudents { get; set; } = new List<Student>();
 
-        public static Student InsertDepartment(Student department)
+        public static Student InsertStudent(Student student)
         {
-            AllDepartments.Add(department);
-            return department;
+            AllStudents.Add(student);
+            return student;
         }
 
 
-        public static List<Department> GetAllDepartments()
+        public static List<Student> GetAllStudents()
         {
-            return AllDepartments;
+            return AllStudents;
         }
 
-        public static Department GetADepartment(string code)
+        public static Student GetAStudent(string email)
         {
-            return AllDepartments.FirstOrDefault(x => x.Code == code);
+            return AllStudents.FirstOrDefault(x => x.Email == email);
         }
 
-        public static Department UpdateDepartment(string code, Department dept)
+        public static Student UpdateStudent(string email, Student stu)
         {
       
             // var department = GetADepartment(code);
             // department.Name = dept.Name;
             // return department;
-            var department = new Department();
-            foreach (var eachdept in AllDepartments)
+            var student = new Student();
+            foreach (var students in AllStudents)
             {
-                if (eachdept.Code == code)
+                if (students.Email == email)
                 {
-                    eachdept.Name = dept.Name;
-                    department = eachdept;
+                    students.Name = stu.Name;
+                    student = students;
                 }
             }
-            return department;
+            return student;
         }
 
-        public static Department DeleteDepartment(string code)
+        public static Student DeleteStudent(string email)
         {
-            var department = AllDepartments.FirstOrDefault(x => x.Code == code);
+            var student = AllStudents.FirstOrDefault(x => x.Email == email);
             
-            AllDepartments = AllDepartments.Where(x => x.Code != department.Code).ToList();
+            AllStudents = AllStudents.Where(x => x.Email != student.Email).ToList();
 
-            return department;
+            return student;
         }
     }
 }
