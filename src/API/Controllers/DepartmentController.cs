@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using DLL.DBContext;
 using DLL.Model;
+using DLL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -10,39 +13,82 @@ namespace API.Controllers
     // [Route("api/v{version:apiVersion}/[controller]")]
     public class DepartmentController : MainApiController
     {
+        private readonly IDepartmentRepository _departmentrepository;
+        public DepartmentController(IDepartmentRepository departmentrepository)
+        {
+            _departmentrepository = departmentrepository;
+        }
+        // GET
+        // [HttpGet]
+        // public IActionResult GetAll()
+        // {
+        //     return Ok(DepartmentStatic.GetAllDepartments());
+        // }
+        
         // GET
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult>  GetAll()
         {
-            return Ok(DepartmentStatic.GetAllDepartments());
+            return Ok(await _departmentrepository.GetAllAsync());
         }
 
 
+        // [HttpGet("{code}")]
+        // public IActionResult GetA(string code)
+        // {
+        //     return Ok(DepartmentStatic.GetADepartment(code));
+        // }
+        
+        
         [HttpGet("{code}")]
-        public IActionResult GetA(string code)
+        public async Task<IActionResult> GetA(string code)
         {
-            return Ok(DepartmentStatic.GetADepartment(code));
+            return Ok(await _departmentrepository.GetAAsync(code));
         }
+        
+        
+        // [HttpPost]
+        // public IActionResult Insert(Department department)
+        // {
+        //
+        //     
+        //     return Ok(DepartmentStatic.InsertDepartment(department));
+        // }
         
         
         [HttpPost]
-        public IActionResult Insert(Department department)
+        public async Task<IActionResult> Insert(Department department)
         {
-            return Ok(DepartmentStatic.InsertDepartment(department));
+
+            return Ok(await _departmentrepository.InsertAsync(department));
+            // return Ok(DepartmentStatic.InsertDepartment(department));
         }
         
+        // [HttpPut("{code}")]
+        // public IActionResult Update(string code,Department department)
+        // {
+        //     return Ok(DepartmentStatic.UpdateDepartment(code,department));
+        // }
         [HttpPut("{code}")]
-        public IActionResult Update(string code,Department department)
+        public async Task<IActionResult> Update(string code,Department department)
         {
-            return Ok(DepartmentStatic.UpdateDepartment(code,department));
+            return Ok(await _departmentrepository.UpdateAsync(code, department));
         }
         
          
         
+        // [HttpDelete("{code}")]
+        // public IActionResult Delete(string code)
+        // {
+        //     return Ok(DepartmentStatic.DeleteDepartment(code));
+        // }
+        
+        
+                
         [HttpDelete("{code}")]
-        public IActionResult Delete(string code)
+        public async Task<IActionResult> Delete(string code)
         {
-            return Ok(DepartmentStatic.DeleteDepartment(code));
+            return Ok(await _departmentrepository.DeleteAsync(code));
         }
     }
     
