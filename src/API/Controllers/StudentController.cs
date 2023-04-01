@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DLL.Model;
+using DLL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -10,39 +12,78 @@ namespace API.Controllers
     // [Route("api/v{version:apiVersion}/[controller]")]
     public class StudentController : MainApiController
     {
+
+        private readonly IStudentRepository _studentRepository;
+        public StudentController(IStudentRepository studentRepository)
+        {
+            _studentRepository = studentRepository;
+        }
         // GET
+        // [HttpGet]
+        // public IActionResult GetAll()
+        // {
+        //     return Ok(StudentStatic.GetAllStudents());
+        // }
+        
         [HttpGet]
-        public IActionResult GetAll()
+        public async  Task<IActionResult> GetAll()
         {
-            return Ok(StudentStatic.GetAllStudents());
+            return Ok(await _studentRepository.GetAllAsync());
         }
 
-
+        //
+        // [HttpGet("{email}")]
+        // public IActionResult GetA(string email)
+        // {
+        //     return Ok(StudentStatic.GetAStudent(email));
+        // }
+        
+        
         [HttpGet("{email}")]
-        public IActionResult GetA(string email)
+        public async  Task<IActionResult> GetA(string email)
         {
-            return Ok(StudentStatic.GetAStudent(email));
+            return Ok(await _studentRepository.GetAAsync(email));
         }
         
+        //
+        // [HttpPost]
+        // public IActionResult Insert(Student student)
+        // {
+        //     return Ok(StudentStatic.InsertStudent(student));
+        // }
         
+                
         [HttpPost]
-        public IActionResult Insert(Student student)
+        public async  Task<IActionResult> Insert(Student student)
         {
-            return Ok(StudentStatic.InsertStudent(student));
+            return Ok(await _studentRepository.InsertAsync(student));
         }
+        //
+        // [HttpPut("{email}")]
+        // public IActionResult Update(string email,Student student)
+        // {
+        //     return Ok(StudentStatic.UpdateStudent(email,student));
+        // }
         
         [HttpPut("{email}")]
-        public IActionResult Update(string email,Student student)
+        public async  Task<IActionResult> Update(string email,Student student)
         {
-            return Ok(StudentStatic.UpdateStudent(email,student));
+            return Ok(await _studentRepository.UpdateAsync(email,student));
         }
         
          
+        //
+        // [HttpDelete("{email}")]
+        // public IActionResult Delete(string email)
+        // {
+        //     return Ok(StudentStatic.DeleteStudent(email));
+        // }
         
+                
         [HttpDelete("{email}")]
-        public IActionResult Delete(string email)
+        public async  Task<IActionResult> Delete(string email)
         {
-            return Ok(StudentStatic.DeleteStudent(email));
+            return Ok(await _studentRepository.DeleteAsync(email));
         }
     }
     
