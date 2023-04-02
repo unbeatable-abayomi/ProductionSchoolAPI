@@ -49,6 +49,7 @@ namespace DLL.Repositories
         {
             var foundStudent = await _applicationDbContext.Students.FirstOrDefaultAsync(s => s.Email == email);
             foundStudent.Name = student.Name;
+            _applicationDbContext.Students.Update(foundStudent);
             await _applicationDbContext.SaveChangesAsync();
             return foundStudent;
 
