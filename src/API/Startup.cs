@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BLL;
 using DLL;
 using DLL.DBContext;
 using Microsoft.AspNetCore.Builder;
@@ -40,6 +41,7 @@ namespace API
             // services.AddDbContext<ApplicationDbContext>(options =>
             //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             DLLDependency.ALLDependency(services, Configuration);
+            BLLDependency.ALLDependency(services,Configuration);
         }
 
         private void SetUpSwagger(IServiceCollection services)

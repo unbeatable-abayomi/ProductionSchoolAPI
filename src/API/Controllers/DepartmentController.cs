@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BLL.Services;
 using DLL.DBContext;
 using DLL.Model;
 using DLL.Repositories;
@@ -13,10 +14,10 @@ namespace API.Controllers
     // [Route("api/v{version:apiVersion}/[controller]")]
     public class DepartmentController : MainApiController
     {
-        private readonly IDepartmentRepository _departmentrepository;
-        public DepartmentController(IDepartmentRepository departmentrepository)
+        private readonly IDepartmentService _departmentservice;
+        public DepartmentController(IDepartmentService departmentservice)
         {
-            _departmentrepository = departmentrepository;
+            _departmentservice = departmentservice;
         }
         // GET
         // [HttpGet]
@@ -29,7 +30,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult>  GetAll()
         {
-            return Ok(await _departmentrepository.GetAllAsync());
+            return Ok(await _departmentservice.GetAllAsync());
         }
 
 
@@ -43,7 +44,7 @@ namespace API.Controllers
         [HttpGet("{code}")]
         public async Task<IActionResult> GetA(string code)
         {
-            return Ok(await _departmentrepository.GetAAsync(code));
+            return Ok(await _departmentservice.GetAAsync(code));
         }
         
         
@@ -60,7 +61,7 @@ namespace API.Controllers
         public async Task<IActionResult> Insert(Department department)
         {
 
-            return Ok(await _departmentrepository.InsertAsync(department));
+            return Ok(await _departmentservice.InsertAsync(department));
             // return Ok(DepartmentStatic.InsertDepartment(department));
         }
         
@@ -72,7 +73,7 @@ namespace API.Controllers
         [HttpPut("{code}")]
         public async Task<IActionResult> Update(string code,Department department)
         {
-            return Ok(await _departmentrepository.UpdateAsync(code, department));
+            return Ok(await _departmentservice.UpdateAsync(code, department));
         }
         
          
@@ -88,7 +89,7 @@ namespace API.Controllers
         [HttpDelete("{code}")]
         public async Task<IActionResult> Delete(string code)
         {
-            return Ok(await _departmentrepository.DeleteAsync(code));
+            return Ok(await _departmentservice.DeleteAsync(code));
         }
     }
     
