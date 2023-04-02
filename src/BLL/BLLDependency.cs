@@ -14,7 +14,7 @@ namespace BLL
             //repository dependency
             services.AddTransient<IDepartmentService, DepartmentService>();
             services.AddTransient<IStudentService, StudentService>();
-            
+            //nw===e
         }
     }
 }
