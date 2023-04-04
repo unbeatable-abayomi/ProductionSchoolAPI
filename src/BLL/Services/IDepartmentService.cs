@@ -13,6 +13,9 @@ namespace BLL.Services
         Task<Department> DeleteAsync(string code);
         Task<Department> UpdateAsync(string code,Department department);
         Task<Department> GetAAsync(string code);
+        Task<bool> IsCodeExists(string code);
+        Task<bool> IsNameExists(string name);
+
     }
 
     public class DepartmentService  : IDepartmentService
@@ -49,6 +52,28 @@ namespace BLL.Services
         public async Task<Department> GetAAsync(string code)
         {
             return await _departmentRepository.GetAAsync(code);
+        }
+
+        public async Task<bool> IsCodeExists(string code)
+        {
+            var department = await _departmentRepository.FindByCode(code);
+            if (department == null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> IsNameExists(string name)
+        {
+            var department = await _departmentRepository.FindByName(name);
+            if (department == null)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
