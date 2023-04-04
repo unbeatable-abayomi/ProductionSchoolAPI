@@ -17,4 +17,12 @@
       <ProjectReference Include="..\DLL\DLL.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Response" />
+    </ItemGroup>
+
 </Project>

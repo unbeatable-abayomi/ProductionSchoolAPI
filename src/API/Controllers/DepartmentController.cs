@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BLL.Request;
 using BLL.Services;
 using DLL.DBContext;
 using DLL.Model;
@@ -57,11 +58,19 @@ namespace API.Controllers
         // }
         
         
+        //[HttpPost]
+        //public async Task<IActionResult> Insert(Department department)
+        //{
+
+           // return Ok(await _departmentservice.InsertAsync(department));
+            // return Ok(DepartmentStatic.InsertDepartment(department));
+            // }
+        
         [HttpPost]
-        public async Task<IActionResult> Insert(Department department)
+        public async Task<IActionResult> Insert(DepartmentInsertRequestViewModel request)
         {
 
-            return Ok(await _departmentservice.InsertAsync(department));
+            return Ok(await _departmentservice.InsertAsync(request));
             // return Ok(DepartmentStatic.InsertDepartment(department));
         }
         
