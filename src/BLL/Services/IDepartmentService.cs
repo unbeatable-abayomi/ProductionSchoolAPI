@@ -47,7 +47,7 @@ namespace BLL.Services
             if (department == null)
             {
                 //throw new Exception("department not found");
-              throw  new ApplicationValidationExpection("department not found");
+              throw  new ApplicationValidationException("department not found");
             }
             //return await _departmentRepository.DeleteAsync(department.Code);
             if (await _departmentRepository.DeleteAsync(department))
@@ -55,7 +55,7 @@ namespace BLL.Services
                 return department;
             };
             //throw new Exception("Encountered Error While Deleting Data");
-            throw  new ApplicationValidationExpection("Encountered Error While Deleting Data");
+            throw  new ApplicationValidationException("Encountered Error While Deleting Data");
         }
 
         public async Task<Department> UpdateAsync(string code, Department department)
@@ -71,7 +71,7 @@ namespace BLL.Services
                 var alreadyExistsCode =await _departmentRepository.FindByCode(department.Code);
                 if (alreadyExistsCode != null)
                 {
-                    throw  new ApplicationValidationExpection("Your Updated Code already in our system");
+                    throw  new ApplicationValidationException("Your Updated Code already in our system");
                 }
                 dept.Code = department.Code;
             }
@@ -83,7 +83,7 @@ namespace BLL.Services
                 var alreadyExistsCode =await _departmentRepository.FindByName(department.Name);
                 if (alreadyExistsCode != null)
                 {
-                    throw  new ApplicationValidationExpection("Your Updated Name already in our system");
+                    throw  new ApplicationValidationException("Your Updated Name already in our system");
                 }
                 dept.Name = department.Name;
 
@@ -93,7 +93,7 @@ namespace BLL.Services
              {
                  return dept;
              } ;
-             throw  new ApplicationValidationExpection("Couldn't Update your department ");
+             throw  new ApplicationValidationException("Couldn't Update your department ");
         }
 
         public async Task<Department> GetAAsync(string code)
@@ -101,7 +101,7 @@ namespace BLL.Services
             var department =  await _departmentRepository.GetAAsync(code);
             if (department == null)
             {
-                throw  new ApplicationValidationExpection("Department Not found");
+                throw new ApplicationValidationException("Department Not found");
 
             }
 
