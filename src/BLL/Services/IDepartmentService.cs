@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BLL.Request;
 using DLL.Model;
 using DLL.Repositories;
+using Utility.Exceptions;
 
 namespace BLL.Services
 {
@@ -41,17 +43,69 @@ namespace BLL.Services
 
         public async Task<Department> DeleteAsync(string code)
         {
-            return await _departmentRepository.DeleteAsync(code);
+            var department = await _departmentRepository.GetAAsync(code);
+            if (department == null)
+            {
+                //throw new Exception("department not found");
+              throw  new ApplicationValidationExpection("department not found");
+            }
+            //return await _departmentRepository.DeleteAsync(department.Code);
+            if (await _departmentRepository.DeleteAsync(department))
+            {
+                return department;
+            };
+            //throw new Exception("Encountered Error While Deleting Data");
+            throw  new ApplicationValidationExpection("Encountered Error While Deleting Data");
         }
 
         public async Task<Department> UpdateAsync(string code, Department department)
         {
-            return await _departmentRepository.UpdateAsync(code, department);
+            var dept = await _departmentRepository.GetAAsync(code);
+            if (dept == null)
+            {
+                throw new Exception("department not found to update");
+            }
+
+            if (!string.IsNullOrWhiteSpace(department.Code))
+            {
+                var alreadyExistsCode =await _departmentRepository.FindByCode(department.Code);
+                if (alreadyExistsCode != null)
+                {
+                    throw  new ApplicationValidationExpection("Your Updated Code already in our system");
+                }
+                dept.Code = department.Code;
+            }
+          
+
+            
+            if (!string.IsNullOrWhiteSpace(department.Name))
+            {
+                var alreadyExistsCode =await _departmentRepository.FindByName(department.Name);
+                if (alreadyExistsCode != null)
+                {
+                    throw  new ApplicationValidationExpection("Your Updated Name already in our system");
+                }
+                dept.Name = department.Name;
+
+            }
+
+             if (await _departmentRepository.UpdateAsync(dept))
+             {
+                 return dept;
+             } ;
+             throw  new ApplicationValidationExpection("Couldn't Update your department ");
         }
 
         public async Task<Department> GetAAsync(string code)
         {
-            return await _departmentRepository.GetAAsync(code);
+            var department =  await _departmentRepository.GetAAsync(code);
+            if (department == null)
+            {
+                throw  new ApplicationValidationExpection("Department Not found");
+
+            }
+
+            return department;
         }
 
         public async Task<bool> IsCodeExists(string code)

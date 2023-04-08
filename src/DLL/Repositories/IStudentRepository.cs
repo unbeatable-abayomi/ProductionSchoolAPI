@@ -14,6 +14,8 @@ namespace DLL.Repositories
         Task<Student> DeleteAsync(string email);
         Task<Student> UpdateAsync(string email,Student student);
         Task<Student> GetAAsync(string email);
+        Task <Student> FindByEmail(string email);
+        Task <Student> FindByName(string name);
     }
 
     public class StudentRepository : IStudentRepository
@@ -60,6 +62,16 @@ namespace DLL.Repositories
             var student = await _applicationDbContext.Students.FirstOrDefaultAsync(s => s.Email == email);
             return student;
 
+        }
+
+        public async Task<Student> FindByEmail(string email)
+        {
+            return await _applicationDbContext.Students.FirstOrDefaultAsync(s => s.Email == email);
+        }
+
+        public async Task<Student> FindByName(string name)
+        {
+            return await _applicationDbContext.Students.FirstOrDefaultAsync(s => s.Name == name);
         }
     }
 }
