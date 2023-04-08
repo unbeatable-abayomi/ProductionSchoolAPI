@@ -32,7 +32,8 @@ namespace BLL.Request
             }
 
             var requiredService = _serviceProvider.GetRequiredService<IStudentService>();
-            return await requiredService.IsEmailExists(email);
+           // return await requiredService.IsEmailExists(email);
+           return true;
         }
         
         private async  Task<bool> NameExist (string name, CancellationToken arg2)
@@ -43,7 +44,9 @@ namespace BLL.Request
             }
 
             var requiredService = _serviceProvider.GetRequiredService<IStudentService>();
-            return await requiredService.IsNameExists(name);
+            //return await requiredService.IsNameExists(name);
+            return true;
+
         }
     }
 }

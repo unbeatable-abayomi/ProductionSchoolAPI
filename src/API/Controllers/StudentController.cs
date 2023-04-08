@@ -56,9 +56,9 @@ namespace API.Controllers
         
                 
         [HttpPost]
-        public async  Task<IActionResult> Insert(StudentInsertRequestViewModel request)
+        public async  Task<IActionResult> Insert(Student student)
         {
-            return Ok(await _studentService.InsertAsync(request));
+            return Ok(await _studentService.InsertAsync(student));
         }
         //
         // [HttpPut("{email}")]
